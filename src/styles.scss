@@ -1,0 +1,33 @@
+body * {
+  position: relative;
+  margin: 0;
+  display: block;
+}
+
+html {
+  display: block;
+  overflow: hidden;
+  height: 100%;
+  width: 100%;
+}
+
+body {
+  margin: 0;
+  display: block;
+  overflow: hidden;
+  height: 100%;
+  width: 100%;
+}
+
+app-root {
+  height: 100%;
+  width: 100%;
+}
+
+span, a {
+  display: inline;
+}
+
+a {
+  text-decoration: none;
+}
