@@ -1,7 +1,7 @@
 import {Ability} from './ability.impl';
 import {EnergiesList} from './energies-list.impl';
 import {MagicList} from './magic-list.impl';
-import {AbilityModelNamespace as AbilityModel} from 'models/AbilityModel.namespace';
+import {AbilityModelNamespace as AbilityModel} from 'src/models/AbilityModel.namespace';
 
 export class MagicAbilitiesFabric {
   public static calcManaDemand(baseAbilityProps: AbilityModel.BaseAbilityPropertiesList): number {

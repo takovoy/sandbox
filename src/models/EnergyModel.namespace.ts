@@ -16,6 +16,7 @@ export namespace EnergyModelNamespace {
     water = 'water',
     air = 'air',
     soil = 'soil',
+    electricity = 'electricity',
   }
 
   export type MagicValueList = {

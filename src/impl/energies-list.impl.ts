@@ -1,4 +1,4 @@
-import {EnergyModelNamespace as EnergyModel} from 'models/EnergyModel.namespace';
+import {EnergyModelNamespace as EnergyModel} from 'src/models/EnergyModel.namespace';
 
 export class EnergiesList implements EnergyModel.EnergiesValueList {
   constructor(

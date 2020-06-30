@@ -1,7 +1,7 @@
 import {EnergiesList} from './energies-list.impl';
 import {MagicList} from './magic-list.impl';
-import {EnergyModelNamespace} from 'models/EnergyModel.namespace';
-import {AbilityModelNamespace as AbilityModel} from 'models/AbilityModel.namespace';
+import {EnergyModelNamespace} from 'src/models/EnergyModel.namespace';
+import {AbilityModelNamespace as AbilityModel} from 'src/models/AbilityModel.namespace';
 
 export class Ability implements AbilityModel.IAbility {
   public name: string;

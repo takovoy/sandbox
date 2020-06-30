@@ -1,4 +1,4 @@
-import {EnergyModelNamespace as EnergyModel} from 'models/EnergyModel.namespace';
+import {EnergyModelNamespace as EnergyModel} from 'src/models/EnergyModel.namespace';
 
 export class MagicList implements EnergyModel.MagicValueList {
   constructor(
@@ -6,5 +6,6 @@ export class MagicList implements EnergyModel.MagicValueList {
     public water = 0,
     public air = 0,
     public soil = 0,
+    public electricity = 0,
   ) {}
 }

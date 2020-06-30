@@ -18,11 +18,7 @@
     ],
     "paths": {
       "src/*": ["src/*"],
-      "app/*": ["src/app/*"],
-      "models/*": ["src/models/*"],
-      "impl/*": ["src/impl/*"],
-      "lib/*": ["src/lib/*"],
-      "stubs/*": ["src/stubs/*"]
+      "app/*": ["src/app/*"]
     }
   }
 }

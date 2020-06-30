@@ -1,5 +1,5 @@
-import {MagicAbilitiesFabric} from 'impl/magic-abilities.fabric';
-import {AbilityModelNamespace as AbilityModel} from 'models/AbilityModel.namespace';
+import {MagicAbilitiesFabric} from 'src/impl/magic-abilities.fabric';
+import {AbilityModelNamespace as AbilityModel} from 'src/models/AbilityModel.namespace';
 
 export const ABILITIES: AbilityModel.IAbility[] = [
   MagicAbilitiesFabric.createFireAbility({
