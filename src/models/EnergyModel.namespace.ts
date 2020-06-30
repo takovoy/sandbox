@@ -1,7 +1,7 @@
 export namespace EnergyModelNamespace {
   export enum EnergyTypesEnum {
     mana = 'mana',
-    parna = 'prana',
+    prana = 'prana',
     strength = 'strength',
     aura = 'aura',
     soul = 'soul',

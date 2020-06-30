@@ -1,7 +1,7 @@
-import {EnergyModelNamespace} from './EnergyModel.namespace';
+import {EnergyModelNamespace as EnergyModel} from './EnergyModel.namespace';
 
 export interface IEnergyUser {
-  energiesValue: EnergyModelNamespace.EnergiesValueList;
-  energiesPower: EnergyModelNamespace.EnergiesValueList;
-  energiesGrowthFactor: EnergyModelNamespace.EnergiesValueList;
+  energiesValue: EnergyModel.EnergiesValueList;
+  energiesPower: EnergyModel.EnergiesValueList;
+  energiesGrowthFactor: EnergyModel.EnergiesValueList;
 }

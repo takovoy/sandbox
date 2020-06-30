@@ -1,6 +1,6 @@
-import {EnergyModelNamespace} from '../models/EnergyModel.namespace';
+import {EnergyModelNamespace as EnergyModel} from 'models/EnergyModel.namespace';
 
-export class MagicList implements EnergyModelNamespace.MagicValueList {
+export class MagicList implements EnergyModel.MagicValueList {
   constructor(
     public fire = 0,
     public water = 0,
