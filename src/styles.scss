@@ -1,6 +1,10 @@
-body * {
+* {
+  font-family: Roboto, sans-serif;
   position: relative;
   margin: 0;
+}
+
+body * {
   display: block;
 }
 
@@ -12,7 +16,6 @@ html {
 }
 
 body {
-  margin: 0;
   display: block;
   overflow: hidden;
   height: 100%;

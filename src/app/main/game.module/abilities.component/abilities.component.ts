@@ -9,5 +9,5 @@ import {ABILITIES} from 'src/stubs/abilities.stub';
   styleUrls: ['abilities.component.scss'],
 })
 export class AbilitiesComponent {
-  @Input() public abilities: IAbility[] = ABILITIES;
+  @Input() public abilities: IAbility[] = [];
 }

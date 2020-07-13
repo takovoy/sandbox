@@ -5,6 +5,7 @@ import {AbilitiesComponent} from './abilities.component/abilities.component';
 import {InventoryComponent} from './inventory.component/inventory.component';
 import {BeltSidebarComponent} from './belt-sidebar.component/belt-sidebar.component';
 import {GameRenderPlaneComponent} from './game-render-plane.component/game-render-plane.component';
+import {BrowserModule} from '@angular/platform-browser';
 
 @NgModule({
   declarations: [
@@ -15,6 +16,7 @@ import {GameRenderPlaneComponent} from './game-render-plane.component/game-rende
     GameRenderPlaneComponent,
   ],
   imports: [
+    BrowserModule,
     GameRoutingModule,
   ],
 })
