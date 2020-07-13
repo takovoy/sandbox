@@ -24,6 +24,7 @@ export namespace InventoryModelNamespace {
     inventoryItemType: InventoryItemTypesEnum;
     level: InventoryItemLevelsEnum;
     quantity: number;
+    durability: number | 'infinity';
   }
 
   export enum ArmorItemTypesEnum {
@@ -38,10 +39,10 @@ export namespace InventoryModelNamespace {
   }
 
   export interface IArmorItem extends IInventoryItem {
+    inventoryItemType: InventoryItemTypesEnum.armor;
     armorItemType: ArmorItemTypesEnum;
     physicalResistance: number;
     magicResistance: EnergyModelNamespace.MagicValueList;
-    durability: number;
   }
 
   export enum WeaponItemTypesEnum {
@@ -54,9 +55,20 @@ export namespace InventoryModelNamespace {
   }
 
   export interface IWeaponItem extends IInventoryItem {
+    inventoryItemType: InventoryItemTypesEnum.weapon;
     weaponItemType: WeaponItemTypesEnum;
     physicalDamage: number;
     magicDamage: EnergyModelNamespace.MagicValueList;
-    durability: number;
+  }
+
+  export enum AccessoryItemTypesEnum {
+    headphones = 'headphones',
+    ring = 'ring',
+    glasses = 'glasses',
+  }
+
+  export interface IAccessoryItem extends IInventoryItem {
+    inventoryItemType: InventoryItemTypesEnum.accessories;
+    accessoryItemType: AccessoryItemTypesEnum;
   }
 }
