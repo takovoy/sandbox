@@ -1,4 +1,5 @@
 import {EnergyModelNamespace} from './EnergyModel.namespace';
+import {CommonNamespace} from './Common.namespace';
 
 export namespace InventoryModelNamespace {
 
@@ -8,21 +9,12 @@ export namespace InventoryModelNamespace {
     accessories = 'accessories',
   }
 
-  export enum InventoryItemLevelsEnum {
-    trash = 'trash',
-    usual = 'usual',
-    good = 'good',
-    excellent = 'excellent',
-    heroic = 'heroic',
-    legendary = 'legendary',
-    mythical = 'mythical',
-  }
-
   export interface IInventoryItem {
     name: string;
     description: string;
     inventoryItemType: InventoryItemTypesEnum;
-    level: InventoryItemLevelsEnum;
+    level: CommonNamespace.LevelsEnum;
+    material: CommonNamespace.MaterialsEnum;
     quantity: number;
     durability: number | 'infinity';
   }
