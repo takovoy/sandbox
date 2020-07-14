@@ -13,23 +13,14 @@ export class Ability implements AbilityModel.IAbility {
   public effectTime: number;
   public effectDamage: number;
 
-  constructor({
-    name = 'Unknown ability',
-    energiesDemand = new EnergiesList(),
-    magicTypeCorrelation = new MagicList({}),
-    distance = 0,
-    resistance = 0,
-    damage = 0,
-    effectTime = 0,
-    effectDamage = 0,
-  }: AbilityModel.IAbility) {
-    this.name = name;
-    this.energiesDemand = energiesDemand;
-    this.magicTypeCorrelation = magicTypeCorrelation;
-    this.distance = distance;
-    this.resistance = resistance;
-    this.damage = damage;
-    this.effectTime = effectTime;
-    this.effectDamage = effectDamage;
+  constructor(rawAbility: AbilityModel.IAbility) {
+    this.name = rawAbility.name || 'Unknown ability';
+    this.energiesDemand = rawAbility.energiesDemand || new EnergiesList();
+    this.magicTypeCorrelation = rawAbility.magicTypeCorrelation || new MagicList({});
+    this.distance = rawAbility.distance || 0;
+    this.resistance = rawAbility.resistance || 0;
+    this.damage = rawAbility.damage || 0;
+    this.effectTime = rawAbility.effectTime || 0;
+    this.effectDamage = rawAbility.effectDamage || 0;
   }
 }

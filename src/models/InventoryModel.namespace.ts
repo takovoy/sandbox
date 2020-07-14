@@ -9,8 +9,8 @@ export namespace InventoryModelNamespace {
     accessories = 'accessories',
   }
 
-  export enum InventoryItemLevelsEnum {
-    trash = 'trash',
+  export enum InventoryItemQualityEnum {
+    low = 'low',
     usual = 'usual',
     good = 'good',
     excellent = 'excellent',
@@ -19,15 +19,23 @@ export namespace InventoryModelNamespace {
     mythical = 'mythical',
   }
 
-  export interface IInventoryItem {
+  export interface IRawInventoryItem {
     id?: string;
     name: string;
     description: string;
-    inventoryItemType: InventoryItemTypesEnum;
-    level: InventoryItemLevelsEnum;
+    quality: InventoryItemQualityEnum;
     materials: CommonNamespace.MaterialsEnum[];
-    quantity: number;
-    durability: number | 'infinity';
+    durabilityLimit: number | 'infinity';
+    durability?: number;
+  }
+
+  export interface ITypedInventoryItem extends IRawInventoryItem {
+    inventoryItemType: InventoryItemTypesEnum;
+  }
+
+  export interface IInventoryItem extends ITypedInventoryItem {
+    inventoryItemType: InventoryItemTypesEnum;
+    durability: number;
   }
 
   export enum ArmorItemTypesEnum {
@@ -41,27 +49,70 @@ export namespace InventoryModelNamespace {
     boots = 'boots',
   }
 
-  export interface IArmorItem extends IInventoryItem {
-    inventoryItemType: InventoryItemTypesEnum.armor;
-    armorItemType: ArmorItemTypesEnum;
+  export interface IRawArmorItem extends IRawInventoryItem {
     physicalResistance: number;
     magicResistance: EnergyModelNamespace.MagicValueList;
+  }
+
+  export interface ITypedArmorItem extends IRawArmorItem {
+    armorItemType: ArmorItemTypesEnum;
+  }
+
+  export interface IArmorItem extends IInventoryItem, ITypedArmorItem {
+    inventoryItemType: InventoryItemTypesEnum.armor;
+    durability: number;
+  }
+
+  export interface IHelmet extends IArmorItem {
+    armorItemType: ArmorItemTypesEnum.helmet;
+  }
+
+  export interface IShoulders extends IArmorItem {
+    armorItemType: ArmorItemTypesEnum.shoulders;
+  }
+
+  export interface IBracers extends IArmorItem {
+    armorItemType: ArmorItemTypesEnum.bracers;
+  }
+
+  export interface IGloves extends IArmorItem {
+    armorItemType: ArmorItemTypesEnum.gloves;
+  }
+
+  export interface IChestArmor extends IArmorItem {
+    armorItemType: ArmorItemTypesEnum.chestArmor;
+  }
+
+  export interface IBelt extends IArmorItem {
+    armorItemType: ArmorItemTypesEnum.belt;
+  }
+
+  export interface ILeggings extends IArmorItem {
+    armorItemType: ArmorItemTypesEnum.leggings;
+  }
+
+  export interface IBoots extends IArmorItem {
+    armorItemType: ArmorItemTypesEnum.boots;
   }
 
   export enum WeaponItemTypesEnum {
     sword = 'sword',
     mace = 'mace',
-    ax = 'ax',
+    axe = 'axe',
     bow = 'bow',
     lance = 'lance',
     poleaxe = 'poleaxe',
   }
 
-  export interface IWeaponItem extends IInventoryItem {
-    inventoryItemType: InventoryItemTypesEnum.weapon;
+  export interface IRawWeaponItem extends IRawInventoryItem {
     weaponItemType: WeaponItemTypesEnum;
     physicalDamage: number;
     magicDamage: EnergyModelNamespace.MagicValueList;
+  }
+
+  export interface IWeaponItem extends IInventoryItem, IRawWeaponItem {
+    inventoryItemType: InventoryItemTypesEnum.weapon;
+    durability: number;
   }
 
   export enum AccessoryItemTypesEnum {
@@ -71,8 +122,12 @@ export namespace InventoryModelNamespace {
     bracelet = 'bracelet',
   }
 
-  export interface IAccessoryItem extends IInventoryItem {
-    inventoryItemType: InventoryItemTypesEnum.accessories;
+  export interface IRawAccessoryItem extends IRawInventoryItem {
     accessoryItemType: AccessoryItemTypesEnum;
+  }
+
+  export interface IAccessoryItem extends IInventoryItem, IRawAccessoryItem {
+    inventoryItemType: InventoryItemTypesEnum.accessories;
+    durability: number;
   }
 }
