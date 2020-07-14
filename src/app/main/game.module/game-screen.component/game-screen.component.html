@@ -1,4 +1,4 @@
 <game-render-plane></game-render-plane>
 <abilities [abilities]="player.abilities"></abilities>
-<belt-sidebar></belt-sidebar>
-<inventory></inventory>
+<belt-sidebar [items]="player.quickAccessItems"></belt-sidebar>
+<inventory [items]="player.inventory"></inventory>

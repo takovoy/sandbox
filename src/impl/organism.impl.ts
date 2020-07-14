@@ -12,6 +12,9 @@ export class Organism implements OrganismModelNamespace.IOrganism {
   public energiesPower: EnergyModel.EnergiesValueList;
   public abilities: AbilityModelNamespace.IAbility[];
   public inventory: InventoryModelNamespace.IInventoryItem[];
+  public quickAccessItems: InventoryModelNamespace.IInventoryItem[];
+  public locationId: string;
+  public position: [number, number];
 
   constructor(rawOrganism: OrganismModelNamespace.IOrganism) {
     this.id = rawOrganism.id || null;
@@ -22,5 +25,8 @@ export class Organism implements OrganismModelNamespace.IOrganism {
     this.energiesPower = rawOrganism.energiesPower;
     this.abilities = rawOrganism.abilities;
     this.inventory = rawOrganism.inventory;
+    this.quickAccessItems = rawOrganism.quickAccessItems;
+    this.locationId = rawOrganism.locationId;
+    this.position = rawOrganism.position;
   }
 }

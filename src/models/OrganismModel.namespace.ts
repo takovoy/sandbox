@@ -22,5 +22,8 @@ export namespace OrganismModelNamespace {
     energiesPower: EnergyModel.EnergiesValueList;
     abilities: AbilityModelNamespace.IAbility[];
     inventory: InventoryModelNamespace.IInventoryItem[];
+    quickAccessItems: InventoryModelNamespace.IInventoryItem[];
+    locationId: string;
+    position: [number, number];
   }
 }

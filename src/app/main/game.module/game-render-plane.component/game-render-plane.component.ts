@@ -1,6 +1,6 @@
 import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
-import {ExcessorArchitecture} from '../../../common/excessorTS/excessor.namespace';
-import {Draw} from '../../../common/excessorTS/excessor';
+import {ExcessorArchitecture} from 'app/common/excessorTS/excessor.namespace';
+import {Draw} from 'app/common/excessorTS/dist/draw';
 
 @Component({
   selector: 'game-render-plane',
@@ -12,8 +12,7 @@ export class GameRenderPlaneComponent implements OnInit {
 
   constructor(private hostElement: ElementRef) {}
 
-  public ngOnInit() {
-    console.dir(this.hostElement.nativeElement);
+  public ngOnInit(): void {
     this.draw = new Draw(this.hostElement.nativeElement.offsetWidth, this.hostElement.nativeElement.offsetHeight);
     this.hostElement.nativeElement.appendChild(this.draw.CanvasDOMObject);
   }
