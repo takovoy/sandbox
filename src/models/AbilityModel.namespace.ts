@@ -26,6 +26,7 @@ export namespace AbilityModelNamespace {
   }
 
   export interface IAbility extends IRawAbility {
+    id?: string;
     energiesDemand: EnergyModelNamespace.EnergiesValueList;
     magicTypeCorrelation: EnergyModelNamespace.MagicValueList;
   }

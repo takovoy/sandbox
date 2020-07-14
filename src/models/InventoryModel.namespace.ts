@@ -9,12 +9,23 @@ export namespace InventoryModelNamespace {
     accessories = 'accessories',
   }
 
+  export enum InventoryItemLevelsEnum {
+    trash = 'trash',
+    usual = 'usual',
+    good = 'good',
+    excellent = 'excellent',
+    heroic = 'heroic',
+    legendary = 'legendary',
+    mythical = 'mythical',
+  }
+
   export interface IInventoryItem {
+    id?: string;
     name: string;
     description: string;
     inventoryItemType: InventoryItemTypesEnum;
-    level: CommonNamespace.LevelsEnum;
-    material: CommonNamespace.MaterialsEnum;
+    level: InventoryItemLevelsEnum;
+    materials: CommonNamespace.MaterialsEnum[];
     quantity: number;
     durability: number | 'infinity';
   }
@@ -57,6 +68,7 @@ export namespace InventoryModelNamespace {
     headphones = 'headphones',
     ring = 'ring',
     glasses = 'glasses',
+    bracelet = 'bracelet',
   }
 
   export interface IAccessoryItem extends IInventoryItem {

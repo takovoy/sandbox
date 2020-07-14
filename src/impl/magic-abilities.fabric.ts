@@ -16,7 +16,7 @@ export class MagicAbilitiesFabric {
     return new Ability({
       ...baseAbilityProps,
       energiesDemand: new EnergiesList(this.calcManaDemand(baseAbilityProps)),
-      magicTypeCorrelation: new MagicList(1),
+      magicTypeCorrelation: new MagicList({fire: 1}),
     });
   }
 
@@ -24,7 +24,31 @@ export class MagicAbilitiesFabric {
     return new Ability({
       ...baseAbilityProps,
       energiesDemand: new EnergiesList(this.calcManaDemand(baseAbilityProps)),
-      magicTypeCorrelation: new MagicList(0, 1),
+      magicTypeCorrelation: new MagicList({water: 1}),
+    });
+  }
+
+  public static createAirAbility(baseAbilityProps: AbilityModel.IRawAbility): AbilityModel.IAbility {
+    return new Ability({
+      ...baseAbilityProps,
+      energiesDemand: new EnergiesList(this.calcManaDemand(baseAbilityProps)),
+      magicTypeCorrelation: new MagicList({air: 1}),
+    });
+  }
+
+  public static createSoilAbility(baseAbilityProps: AbilityModel.IRawAbility): AbilityModel.IAbility {
+    return new Ability({
+      ...baseAbilityProps,
+      energiesDemand: new EnergiesList(this.calcManaDemand(baseAbilityProps)),
+      magicTypeCorrelation: new MagicList({soil: 1}),
+    });
+  }
+
+  public static createElectricityAbility(baseAbilityProps: AbilityModel.IRawAbility): AbilityModel.IAbility {
+    return new Ability({
+      ...baseAbilityProps,
+      energiesDemand: new EnergiesList(this.calcManaDemand(baseAbilityProps)),
+      magicTypeCorrelation: new MagicList({electricity: 1}),
     });
   }
 }

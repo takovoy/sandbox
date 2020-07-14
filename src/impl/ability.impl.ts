@@ -16,7 +16,7 @@ export class Ability implements AbilityModel.IAbility {
   constructor({
     name = 'Unknown ability',
     energiesDemand = new EnergiesList(),
-    magicTypeCorrelation = new MagicList(),
+    magicTypeCorrelation = new MagicList({}),
     distance = 0,
     resistance = 0,
     damage = 0,
