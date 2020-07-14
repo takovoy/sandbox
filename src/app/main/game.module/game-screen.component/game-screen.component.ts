@@ -1,7 +1,6 @@
-import {Component, Input} from '@angular/core';
-import {ABILITIES} from 'src/stubs/abilities.stub';
-import {AbilityModelNamespace} from 'src/models/AbilityModel.namespace';
-import IAbility = AbilityModelNamespace.IAbility;
+import {Component} from '@angular/core';
+import {OrganismModelNamespace} from 'src/models/OrganismModel.namespace';
+import {PLAYER} from 'src/stubs/player.stub';
 
 @Component({
   selector: 'game-screen',
@@ -9,5 +8,5 @@ import IAbility = AbilityModelNamespace.IAbility;
   styleUrls: ['game-screen.component.scss'],
 })
 export class GameScreenComponent {
-  public abilities: IAbility[] = ABILITIES;
+  public player: OrganismModelNamespace.IOrganism = PLAYER;
 }

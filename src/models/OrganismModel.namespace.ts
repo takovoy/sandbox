@@ -6,6 +6,9 @@ export namespace OrganismModelNamespace {
 
   export enum OrganismTypesEnum {
     human = 'human',
+    elf = 'elf',
+    dwarf = 'dwarf',
+    orc = 'orc',
     animal = 'animal',
     monster = 'monster',
   }
