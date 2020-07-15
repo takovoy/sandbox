@@ -3,6 +3,7 @@ import {Organism} from '../impl/organism.impl';
 import {EnergiesList} from '../impl/energies-list.impl';
 import {ABILITIES} from './abilities.stub';
 import {INVENTORY} from './inventory.stub';
+import {GAME_FIELD} from 'src/stubs/game-field.stub';
 
 export const PLAYER: OrganismModel.IOrganism = new Organism({
   name: 'Nemeru Seto',
@@ -13,7 +14,7 @@ export const PLAYER: OrganismModel.IOrganism = new Organism({
   abilities: ABILITIES,
   inventory: INVENTORY,
   quickAccessItems: INVENTORY,
-  locationId: 'Unknown location',
+  locationId: GAME_FIELD.id,
   sizeX: 1,
   sizeY: 1,
   positionX: 0,

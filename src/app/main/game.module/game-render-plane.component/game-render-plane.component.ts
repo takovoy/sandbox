@@ -2,6 +2,7 @@ import {Component, ElementRef, Input, OnInit, ViewChild} from '@angular/core';
 import * as threejs from 'three';
 import {GameFieldModelNamespace, GameFieldModelNamespace as GameFieldModel} from 'src/models/GameFieldModel.namespace';
 import {OrganismModelNamespace} from 'src/models/OrganismModel.namespace';
+import {GAME_FIELD} from 'src/stubs/game-field.stub';
 
 @Component({
   selector: 'game-render-plane',
@@ -10,7 +11,7 @@ import {OrganismModelNamespace} from 'src/models/OrganismModel.namespace';
 })
 export class GameRenderPlaneComponent implements OnInit {
   @Input() public player: OrganismModelNamespace.IOrganism;
-  private gameFieldEntity: GameFieldModelNamespace.IGameField;
+  private gameFieldEntity: GameFieldModelNamespace.IGameField = GAME_FIELD;
   private scene: threejs.Scene = new threejs.Scene();
   private camera: threejs.Camera;
   private renderer: threejs.WebGLRenderer = new threejs.WebGLRenderer();
@@ -30,6 +31,7 @@ export class GameRenderPlaneComponent implements OnInit {
     );
     this.renderer.setSize(this.hostElement.nativeElement.offsetWidth, this.hostElement.nativeElement.offsetHeight);
     this.hostElement.nativeElement.appendChild(this.renderer.domElement);
+    this.initGameField(this.gameFieldEntity);
   }
 
   private loadTexture(path: string): Promise<threejs.Texture> {
@@ -53,5 +55,9 @@ export class GameRenderPlaneComponent implements OnInit {
     const material = new threejs.MeshBasicMaterial( { map: textures[0] } );
     this.gameFieldCellsMaterials[cell.type] = material;
     return material;
+  }
+
+  private initGameField(gameField: GameFieldModelNamespace.IGameField): void {
+    gameField.cells.forEach(cell => this.prepareGameFieldCellMaterial(cell));
   }
 }
