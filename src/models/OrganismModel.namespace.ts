@@ -24,6 +24,9 @@ export namespace OrganismModelNamespace {
     inventory: InventoryModelNamespace.IInventoryItem[];
     quickAccessItems: InventoryModelNamespace.IInventoryItem[];
     locationId: string;
-    position: [number, number];
+    sizeX: number;
+    sizeY: number;
+    positionX: number;
+    positionY: number;
   }
 }

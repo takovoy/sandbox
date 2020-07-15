@@ -14,5 +14,8 @@ export const PLAYER: OrganismModel.IOrganism = new Organism({
   inventory: INVENTORY,
   quickAccessItems: INVENTORY,
   locationId: 'Unknown location',
-  position: [0, 0],
+  sizeX: 1,
+  sizeY: 1,
+  positionX: 0,
+  positionY: 0,
 });

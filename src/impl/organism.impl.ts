@@ -14,7 +14,10 @@ export class Organism implements OrganismModelNamespace.IOrganism {
   public inventory: InventoryModelNamespace.IInventoryItem[];
   public quickAccessItems: InventoryModelNamespace.IInventoryItem[];
   public locationId: string;
-  public position: [number, number];
+  public sizeX: number;
+  public sizeY: number;
+  public positionX: number;
+  public positionY: number;
 
   constructor(rawOrganism: OrganismModelNamespace.IOrganism) {
     this.id = rawOrganism.id || null;
@@ -27,6 +30,9 @@ export class Organism implements OrganismModelNamespace.IOrganism {
     this.inventory = rawOrganism.inventory;
     this.quickAccessItems = rawOrganism.quickAccessItems;
     this.locationId = rawOrganism.locationId;
-    this.position = rawOrganism.position;
+    this.sizeX = rawOrganism.sizeX;
+    this.sizeY = rawOrganism.sizeY;
+    this.positionX = rawOrganism.positionX;
+    this.positionY = rawOrganism.positionY;
   }
 }

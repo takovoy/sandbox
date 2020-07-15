@@ -38,6 +38,11 @@ export namespace InventoryModelNamespace {
     durability: number;
   }
 
+  export interface IDroppedInventoryItem extends IInventoryItem {
+    positionX: number;
+    positionY: number;
+  }
+
   export enum ArmorItemTypesEnum {
     helmet = 'helmet',
     shoulders = 'shoulders',
