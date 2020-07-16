@@ -129,7 +129,8 @@ export class SceneBuilderContext {
     return SceneBuilder.makeMeshes(this);
   }
 
-  public onComplete(callback: (context: SceneBuilderContext) => void): void {
+  public onComplete(callback: (context: SceneBuilderContext) => void): SceneBuilderContext {
     this.cellsMeshesPromise.then(() => callback(this));
+    return this;
   }
 }

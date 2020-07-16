@@ -13,6 +13,7 @@ export class GameRenderPlaneComponent implements OnInit {
   @Input() public player: OrganismModel.IOrganism;
   private gameFieldEntity: GameFieldModel.IGameField = GAME_FIELD;
   private sceneContext: SceneBuilderContext;
+  public loadingProgress = 3;
 
   constructor(private hostElement: ElementRef) {}
 
@@ -31,14 +32,15 @@ export class GameRenderPlaneComponent implements OnInit {
     width: number,
     height: number,
   ): void {
-    SceneBuilder
+    this.sceneContext = SceneBuilder
       .initContext(player, gameField, width, height)
       .loadTextures()
       .makeMaterials()
       .makeMeshes()
-      .onComplete(context => {
-        this.sceneContext = context;
-        this.hostElement.nativeElement.appendChild(context.renderer.domElement);
-      });
+      .onComplete(context => this.loadingProgress = 100);
+    this.sceneContext.cellsTexturePromise.then(() => this.loadingProgress = 25);
+    this.sceneContext.cellsMaterialsPromise.then(() => this.loadingProgress = 50);
+    this.sceneContext.cellsMeshesPromise.then(() => this.loadingProgress = 75);
+    this.hostElement.nativeElement.appendChild(this.sceneContext.renderer.domElement);
   }
 }
