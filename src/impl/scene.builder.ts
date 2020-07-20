@@ -72,7 +72,10 @@ export class SceneBuilder {
       }, {});
       return context.gameField.cells.map(cell => {
         const geometry = new threejs.PlaneGeometry( 20, 20 );
-        return {cell, mesh: new threejs.Mesh(geometry, materialsMap[cell.type])};
+        const mesh = new threejs.Mesh(geometry, materialsMap[cell.type]);
+        mesh.position.x = cell.positionX;
+        mesh.position.y = cell.positionY;
+        return {cell, mesh};
       });
     });
     return context;
@@ -80,6 +83,17 @@ export class SceneBuilder {
 
   public static makeMeshes(context: SceneBuilderContext): SceneBuilderContext {
     this.makeCellsMeshes(context);
+    return context;
+  }
+
+  private static attachCellsMeshesToScene(context: SceneBuilderContext): SceneBuilderContext {
+    context.cellsMeshesAttachPromise = context.cellsMeshesPromise
+      .then(result => result.forEach(item => context.scene.add(item.mesh)));
+    return context;
+  }
+
+  public static attachMeshesToScene(context: SceneBuilderContext): SceneBuilderContext {
+    this.attachCellsMeshesToScene(context);
     return context;
   }
 }
@@ -100,6 +114,7 @@ export class SceneBuilderContext {
     cell: GameFieldModel.IGameFieldCell,
     mesh: threejs.Mesh,
   }[]>;
+  public cellsMeshesAttachPromise: Promise<void>;
 
   constructor(
     public player: OrganismModel.IOrganism,
@@ -129,8 +144,15 @@ export class SceneBuilderContext {
     return SceneBuilder.makeMeshes(this);
   }
 
+  public attachMeshesToScene(): SceneBuilderContext {
+    if (!this.cellsMaterialsPromise) {
+      throw new Error('Game field cells meshes making was not initiated');
+    }
+    return SceneBuilder.attachMeshesToScene(this);
+  }
+
   public onComplete(callback: (context: SceneBuilderContext) => void): SceneBuilderContext {
-    this.cellsMeshesPromise.then(() => callback(this));
+    this.cellsMeshesAttachPromise.then(() => callback(this));
     return this;
   }
 }

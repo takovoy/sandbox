@@ -23,24 +23,40 @@ export class GameRenderPlaneComponent implements OnInit {
       this.gameFieldEntity,
       this.hostElement.nativeElement.offsetWidth,
       this.hostElement.nativeElement.offsetHeight,
-    );
+    ).then(() => this.render());
   }
 
-  private initGameField(
+  private async initGameField(
     player: OrganismModel.IOrganism,
     gameField: GameFieldModel.IGameField,
     width: number,
     height: number,
-  ): void {
-    this.sceneContext = SceneBuilder
-      .initContext(player, gameField, width, height)
-      .loadTextures()
-      .makeMaterials()
-      .makeMeshes()
-      .onComplete(context => this.loadingProgress = 100);
-    this.sceneContext.cellsTexturePromise.then(() => this.loadingProgress = 25);
-    this.sceneContext.cellsMaterialsPromise.then(() => this.loadingProgress = 50);
-    this.sceneContext.cellsMeshesPromise.then(() => this.loadingProgress = 75);
-    this.hostElement.nativeElement.appendChild(this.sceneContext.renderer.domElement);
+  ): Promise<void> {
+    return new Promise(resolve => {
+      this.sceneContext = SceneBuilder
+        .initContext(player, gameField, width, height)
+        .loadTextures()
+        .makeMaterials()
+        .makeMeshes()
+        .attachMeshesToScene()
+        .onComplete(context => {
+          this.loadingProgress = 100;
+          resolve();
+        });
+      this.sceneContext.cellsTexturePromise.then(() => this.loadingProgress = 25);
+      this.sceneContext.cellsMaterialsPromise.then(() => this.loadingProgress = 50);
+      this.sceneContext.cellsMeshesPromise.then(() => this.loadingProgress = 75);
+      this.hostElement.nativeElement.appendChild(this.sceneContext.renderer.domElement);
+    });
+  }
+
+  public render(): void {
+    this.updateCameraPosition();
+    this.sceneContext.renderer.render(this.sceneContext.scene, this.sceneContext.camera);
+  }
+
+  public updateCameraPosition(): void {
+    this.sceneContext.camera.position.z = 250;
+    this.sceneContext.camera.rotation.z = Math.PI / 5;
   }
 }
