@@ -51,12 +51,9 @@ export class GameRenderPlaneComponent implements OnInit {
   }
 
   public render(): void {
-    this.updateCameraPosition();
+    // this.updateCameraPosition();
     this.sceneContext.renderer.render(this.sceneContext.scene, this.sceneContext.camera);
   }
 
-  public updateCameraPosition(): void {
-    this.sceneContext.camera.position.z = 250;
-    this.sceneContext.camera.rotation.z = Math.PI / 5;
-  }
+  public updateCameraPosition(): void {}
 }

@@ -1,6 +1,7 @@
 import {OrganismModelNamespace as OrganismModel} from '../models/OrganismModel.namespace';
 import {GameFieldModelNamespace as GameFieldModel} from '../models/GameFieldModel.namespace';
 import * as threejs from 'three';
+import {OrbitControls} from 'three/examples/jsm/controls/OrbitControls';
 
 export class SceneBuilder {
   private static textureLoader: threejs.TextureLoader = new threejs.TextureLoader();
@@ -74,7 +75,8 @@ export class SceneBuilder {
         const geometry = new threejs.PlaneGeometry( 20, 20 );
         const mesh = new threejs.Mesh(geometry, materialsMap[cell.type]);
         mesh.position.x = cell.positionX;
-        mesh.position.y = cell.positionY;
+        mesh.position.z = cell.positionY;
+        mesh.rotation.x = -Math.PI / 2;
         return {cell, mesh};
       });
     });
@@ -100,7 +102,7 @@ export class SceneBuilder {
 
 export class SceneBuilderContext {
   public scene: threejs.Scene = new threejs.Scene();
-  public camera: threejs.Camera;
+  public camera: threejs.PerspectiveCamera;
   public renderer: threejs.WebGLRenderer = new threejs.WebGLRenderer();
   public cellsTexturePromise: Promise<{
     cellType: GameFieldModel.GameFieldCellTypesEnum,
@@ -122,8 +124,28 @@ export class SceneBuilderContext {
     public width: number,
     public height: number,
   ) {
+    this.scene.background = new threejs.Color( 0xcccccc );
+    this.scene.fog = new threejs.FogExp2( 0xcccccc, 0.002 );
     this.camera = new threejs.PerspectiveCamera(75, width / height, 0.1, 1000);
+    this.camera.aspect = width / height;
+    this.camera.updateProjectionMatrix();
     this.renderer.setSize(width, height);
+    const controls = new OrbitControls( this.camera, this.renderer.domElement );
+    controls.enableDamping = true; // an animation loop is required when either damping or auto-rotation are enabled
+    controls.dampingFactor = 0.05;
+    // controls.screenSpacePanning = false;
+    controls.minDistance = 100;
+    controls.maxDistance = 500;
+    controls.maxPolarAngle = 1.1;
+    controls.minPolarAngle = 1.1;
+    // controls.maxAzimuthAngle = 2;
+    // controls.minAzimuthAngle = 2;
+    // controls.enableRotate = false;
+    controls.update();
+    controls.addEventListener( 'change', () => {
+      this.renderer.render(this.scene, this.camera);
+      console.log(this.camera);
+    } );
   }
 
   public loadTextures(): SceneBuilderContext {
