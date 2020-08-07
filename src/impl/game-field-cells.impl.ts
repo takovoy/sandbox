@@ -1,5 +1,4 @@
-import {GameFieldModelNamespace, GameFieldModelNamespace as GameFieldModel} from '../models/GameFieldModel.namespace';
-import GameFieldCellTypesEnum = GameFieldModelNamespace.GameFieldCellTypesEnum;
+import {GameFieldModelNamespace as GameFieldModel} from '../models/GameFieldModel.namespace';
 
 export class GameFieldCells implements GameFieldModel.IGameFieldCell {
   public type: GameFieldModel.GameFieldCellTypesEnum;
@@ -18,9 +17,9 @@ export class GameFieldCells implements GameFieldModel.IGameFieldCell {
 export class GrassCell extends GameFieldCells implements GameFieldModel.IGameFieldCell {
   constructor(x: number, y: number, correlationX: number = 0, correlationY: number = 0) {
     super({
-      type: GameFieldCellTypesEnum.grass,
-      positionX: x + correlationX,
-      positionY: y + correlationY,
+      type: GameFieldModel.GameFieldCellTypesEnum.grass,
+      positionX: (x + correlationX) * GameFieldModel.GAME_FIELD_CELL_SIZE,
+      positionY: (y + correlationY) * GameFieldModel.GAME_FIELD_CELL_SIZE,
       animationFramesCount: 1,
     });
   }

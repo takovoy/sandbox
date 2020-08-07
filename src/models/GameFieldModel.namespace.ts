@@ -11,6 +11,8 @@ export namespace GameFieldModelNamespace {
     crag = 'crag',
   }
 
+  export const GAME_FIELD_CELL_SIZE = 10;
+
   export interface IGameFieldCell {
     positionX: number;
     positionY: number;

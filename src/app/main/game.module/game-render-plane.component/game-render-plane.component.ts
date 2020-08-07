@@ -14,6 +14,8 @@ export class GameRenderPlaneComponent implements OnInit {
   private gameFieldEntity: GameFieldModel.IGameField = GAME_FIELD;
   private sceneContext: SceneBuilderContext;
   public loadingProgress = 3;
+  private defaultPositionCorrelation: [number, number, number] = [70, 50, 90];
+  private currentPosition: [number, number, number] = [0, 0, 0];
 
   constructor(private hostElement: ElementRef) {}
 
@@ -39,7 +41,7 @@ export class GameRenderPlaneComponent implements OnInit {
         .makeMaterials()
         .makeMeshes()
         .attachMeshesToScene()
-        .onComplete(context => {
+        .onComplete(() => {
           this.loadingProgress = 100;
           resolve();
         });
@@ -51,9 +53,16 @@ export class GameRenderPlaneComponent implements OnInit {
   }
 
   public render(): void {
-    // this.updateCameraPosition();
+    this.updateCameraPosition();
     this.sceneContext.renderer.render(this.sceneContext.scene, this.sceneContext.camera);
   }
 
-  public updateCameraPosition(): void {}
+  public updateCameraPosition(): void {
+    this.sceneContext.camera.position.set(
+      this.defaultPositionCorrelation[0] + this.currentPosition[0],
+      this.defaultPositionCorrelation[1] + this.currentPosition[1],
+      this.defaultPositionCorrelation[2] + this.currentPosition[2],
+    );
+    this.sceneContext.camera.lookAt(...this.currentPosition);
+  }
 }

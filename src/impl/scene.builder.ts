@@ -72,7 +72,10 @@ export class SceneBuilder {
         return res;
       }, {});
       return context.gameField.cells.map(cell => {
-        const geometry = new threejs.PlaneGeometry( 20, 20 );
+        const geometry = new threejs.PlaneGeometry(
+          GameFieldModel.GAME_FIELD_CELL_SIZE,
+          GameFieldModel.GAME_FIELD_CELL_SIZE,
+        );
         const mesh = new threejs.Mesh(geometry, materialsMap[cell.type]);
         mesh.position.x = cell.positionX;
         mesh.position.z = cell.positionY;
@@ -126,26 +129,8 @@ export class SceneBuilderContext {
   ) {
     this.scene.background = new threejs.Color( 0xcccccc );
     this.scene.fog = new threejs.FogExp2( 0xcccccc, 0.002 );
-    this.camera = new threejs.PerspectiveCamera(75, width / height, 0.1, 1000);
-    this.camera.aspect = width / height;
-    this.camera.updateProjectionMatrix();
+    this.camera = new threejs.PerspectiveCamera(60, width / height, 0.1, 1000);
     this.renderer.setSize(width, height);
-    const controls = new OrbitControls( this.camera, this.renderer.domElement );
-    controls.enableDamping = true; // an animation loop is required when either damping or auto-rotation are enabled
-    controls.dampingFactor = 0.05;
-    // controls.screenSpacePanning = false;
-    controls.minDistance = 100;
-    controls.maxDistance = 500;
-    controls.maxPolarAngle = 1.1;
-    controls.minPolarAngle = 1.1;
-    // controls.maxAzimuthAngle = 2;
-    // controls.minAzimuthAngle = 2;
-    // controls.enableRotate = false;
-    controls.update();
-    controls.addEventListener( 'change', () => {
-      this.renderer.render(this.scene, this.camera);
-      console.log(this.camera);
-    } );
   }
 
   public loadTextures(): SceneBuilderContext {
