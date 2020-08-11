@@ -1,7 +1,6 @@
 import {OrganismModelNamespace as OrganismModel} from '../models/OrganismModel.namespace';
 import {GameFieldModelNamespace as GameFieldModel} from '../models/GameFieldModel.namespace';
 import * as threejs from 'three';
-import {OrbitControls} from 'three/examples/jsm/controls/OrbitControls';
 
 export class SceneBuilder {
   private static textureLoader: threejs.TextureLoader = new threejs.TextureLoader();
