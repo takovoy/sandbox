@@ -3,11 +3,13 @@ import {GameFieldModelNamespace as GameFieldModel} from 'src/models/GameFieldMod
 import {OrganismModelNamespace as OrganismModel} from 'src/models/OrganismModel.namespace';
 import {GAME_FIELD} from 'src/stubs/game-field.stub';
 import {SceneBuilder, SceneBuilderContext} from 'src/impl/scene.builder';
-import {DOMEventsService} from 'src/services/DOMEvents.service';
+import {DOMEventsService, KeyboardKeysEnum} from 'src/services/DOMEvents.service';
 import {SceneManager} from 'src/impl/scene-manager';
 import {Subscription} from 'rxjs';
 import {SceneManagerNamespace} from 'src/models/SceneManager.namespace';
 import CardinalPointsEnum = SceneManagerNamespace.CardinalPointsEnum;
+import {AnimationService} from 'src/services/Animation.service';
+import {ExcessorPirate} from 'excessor-pirate';
 
 @Component({
   selector: 'game-render-plane',
@@ -20,10 +22,12 @@ export class GameRenderPlaneComponent implements OnInit, OnDestroy {
   public loadingProgress = 3;
   private sceneManager: SceneManager;
   private domEventsSubscriptions: Subscription[] = [];
+  private passedKeys: {[key in KeyboardKeysEnum]?: ExcessorPirate.IOperation} = {};
 
   constructor(
     private hostElement: ElementRef,
     private domEvents: DOMEventsService,
+    private animationService: AnimationService,
   ) {}
 
   public ngOnInit(): void {
@@ -68,10 +72,17 @@ export class GameRenderPlaneComponent implements OnInit, OnDestroy {
     });
   }
 
+  public startMoving(cardinalPoints): void {}
+
   private subscribeToEvents(): void {
-    this.domEventsSubscriptions.push(this.domEvents.events.wUp.subscribe(event => {
-      this.sceneManager.moveTowards(CardinalPointsEnum.north, 10);
-      this.sceneManager.render();
+    this.domEventsSubscriptions.push(this.domEvents.events.wDown.subscribe(event => {
+      this.animationService.animate({
+        time: 300,
+        frame: () => {
+          this.sceneManager.moveTowards(CardinalPointsEnum.north, 3);
+          this.sceneManager.render();
+        },
+      });
     }));
     this.domEventsSubscriptions.push(this.domEvents.events.aUp.subscribe(event => {
       this.sceneManager.moveTowards(CardinalPointsEnum.west, 10);

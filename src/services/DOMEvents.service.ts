@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {Observable, Subject} from 'rxjs';
 import {filter} from 'rxjs/operators';
 
-enum KeyboardKeysEnum {
+export enum KeyboardKeysEnum {
   w = 'w',
   a = 'a',
   s = 's',
@@ -11,7 +11,7 @@ enum KeyboardKeysEnum {
   shift = 'Shift'
 }
 
-enum KeyboardEventsEnum {
+export enum KeyboardEventsEnum {
   wUp = 'wUp',
   wDown = 'wDown',
   aUp = 'aUp',
