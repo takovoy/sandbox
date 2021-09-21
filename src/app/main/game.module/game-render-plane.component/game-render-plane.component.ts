@@ -1,5 +1,5 @@
 import {Component, ElementRef, Input, OnDestroy, OnInit} from '@angular/core';
-import {GameFieldModelNamespace as GameFieldModel} from 'src/models/GameFieldModel.namespace';
+import {GameFieldNS} from 'src/models/GameField.namespace';
 import {OrganismModelNamespace as OrganismModel} from 'src/models/OrganismModel.namespace';
 import {GAME_FIELD} from 'src/stubs/game-field.stub';
 import {SceneBuilder, SceneBuilderContext} from 'src/impl/scene.builder';
@@ -18,7 +18,7 @@ import {ExcessorPirate} from 'excessor-pirate';
 })
 export class GameRenderPlaneComponent implements OnInit, OnDestroy {
   @Input() public player: OrganismModel.IOrganism;
-  private gameFieldEntity: GameFieldModel.IGameField = GAME_FIELD;
+  private gameFieldEntity: GameFieldNS.IGameField = GAME_FIELD;
   public loadingProgress = 3;
   private sceneManager: SceneManager;
   private domEventsSubscriptions: Subscription[] = [];
@@ -50,7 +50,7 @@ export class GameRenderPlaneComponent implements OnInit, OnDestroy {
 
   private async initGameField(
     player: OrganismModel.IOrganism,
-    gameField: GameFieldModel.IGameField,
+    gameField: GameFieldNS.IGameField,
     width: number,
     height: number,
   ): Promise<SceneBuilderContext> {
@@ -75,7 +75,7 @@ export class GameRenderPlaneComponent implements OnInit, OnDestroy {
   public startMoving(cardinalPoints): void {}
 
   private subscribeToEvents(): void {
-    this.domEventsSubscriptions.push(this.domEvents.events.wDown.subscribe(event => {
+    this.domEventsSubscriptions.push(this.domEvents.events.wDown.subscribe(() => {
       this.animationService.animate({
         time: 300,
         frame: () => {
@@ -84,15 +84,18 @@ export class GameRenderPlaneComponent implements OnInit, OnDestroy {
         },
       });
     }));
-    this.domEventsSubscriptions.push(this.domEvents.events.aUp.subscribe(event => {
+
+    this.domEventsSubscriptions.push(this.domEvents.events.aUp.subscribe(() => {
       this.sceneManager.moveTowards(CardinalPointsEnum.west, 10);
       this.sceneManager.render();
     }));
-    this.domEventsSubscriptions.push(this.domEvents.events.sUp.subscribe(event => {
+
+    this.domEventsSubscriptions.push(this.domEvents.events.sUp.subscribe(() => {
       this.sceneManager.moveTowards(CardinalPointsEnum.south, 10);
       this.sceneManager.render();
     }));
-    this.domEventsSubscriptions.push(this.domEvents.events.dUp.subscribe(event => {
+
+    this.domEventsSubscriptions.push(this.domEvents.events.dUp.subscribe(() => {
       this.sceneManager.moveTowards(CardinalPointsEnum.east, 10);
       this.sceneManager.render();
     }));

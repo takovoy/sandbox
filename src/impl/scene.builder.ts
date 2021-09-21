@@ -1,5 +1,5 @@
 import {OrganismModelNamespace as OrganismModel} from '../models/OrganismModel.namespace';
-import {GameFieldModelNamespace as GameFieldModel} from '../models/GameFieldModel.namespace';
+import {GameFieldNS as GameFieldNS} from '../models/GameField.namespace';
 import * as threejs from 'three';
 
 export class SceneBuilder {
@@ -7,7 +7,7 @@ export class SceneBuilder {
 
   public static initContext(
     player: OrganismModel.IOrganism,
-    gameField: GameFieldModel.IGameField,
+    gameField: GameFieldNS.IGameField,
     width: number,
     height: number,
   ): SceneBuilderContext {
@@ -19,7 +19,7 @@ export class SceneBuilder {
     return new Promise<threejs.Texture>(resolve => this.textureLoader.load(url, (texture) => resolve(texture)));
   }
 
-  private static async loadGameFieldCellTextures(cell: GameFieldModel.IGameFieldCell): Promise<threejs.Texture[]> {
+  private static async loadGameFieldCellTextures(cell: GameFieldNS.IGameFieldCell): Promise<threejs.Texture[]> {
     const promises = [];
     for (let i = 0; i < cell.animationFramesCount; i++) {
       promises.push(this.loadTexture(`game-field-cells/${cell.type}/${i}.png`));
@@ -27,12 +27,12 @@ export class SceneBuilder {
     return Promise.all(promises);
   }
 
-  private static async loadGameFieldCellsTextures(gameField: GameFieldModel.IGameField): Promise<{
-    cellType: GameFieldModel.GameFieldCellTypesEnum,
+  private static async loadGameFieldCellsTextures(gameField: GameFieldNS.IGameField): Promise<{
+    cellType: GameFieldNS.CellTypesEnum,
     textures: threejs.Texture[],
   }[]> {
-    const cellsTexturePromisesMap: {[key in GameFieldModel.GameFieldCellTypesEnum]?: Promise<{
-      cellType: GameFieldModel.GameFieldCellTypesEnum,
+    const cellsTexturePromisesMap: {[key in GameFieldNS.CellTypesEnum]?: Promise<{
+      cellType: GameFieldNS.CellTypesEnum,
       textures: threejs.Texture[],
     }>} = {};
     gameField.cells
@@ -72,8 +72,8 @@ export class SceneBuilder {
       }, {});
       return context.gameField.cells.map(cell => {
         const geometry = new threejs.PlaneGeometry(
-          GameFieldModel.GAME_FIELD_CELL_SIZE,
-          GameFieldModel.GAME_FIELD_CELL_SIZE,
+          GameFieldNS.CELL_SIZE,
+          GameFieldNS.CELL_SIZE,
         );
         const mesh = new threejs.Mesh(geometry, materialsMap[cell.type]);
         mesh.position.x = cell.positionX;
@@ -107,22 +107,22 @@ export class SceneBuilderContext {
   public camera: threejs.PerspectiveCamera;
   public renderer: threejs.WebGLRenderer = new threejs.WebGLRenderer();
   public cellsTexturePromise: Promise<{
-    cellType: GameFieldModel.GameFieldCellTypesEnum,
+    cellType: GameFieldNS.CellTypesEnum,
     textures: threejs.Texture[],
   }[]>;
   public cellsMaterialsPromise: Promise<{
-    cellType: GameFieldModel.GameFieldCellTypesEnum,
+    cellType: GameFieldNS.CellTypesEnum,
     material: threejs.MeshBasicMaterial,
   }[]>;
   public cellsMeshesPromise: Promise<{
-    cell: GameFieldModel.IGameFieldCell,
+    cell: GameFieldNS.IGameFieldCell,
     mesh: threejs.Mesh,
   }[]>;
   public cellsMeshesAttachPromise: Promise<void>;
 
   constructor(
     public player: OrganismModel.IOrganism,
-    public gameField: GameFieldModel.IGameField,
+    public gameField: GameFieldNS.IGameField,
     public width: number,
     public height: number,
   ) {

@@ -1,8 +1,8 @@
 import {InventoryModelNamespace} from './InventoryModel.namespace';
 
-export namespace GameFieldModelNamespace {
+export namespace GameFieldNS {
 
-  export enum GameFieldCellTypesEnum {
+  export enum CellTypesEnum {
     ground = 'ground',
     grass = 'grass',
     dirt = 'dirt',
@@ -11,12 +11,12 @@ export namespace GameFieldModelNamespace {
     crag = 'crag',
   }
 
-  export const GAME_FIELD_CELL_SIZE = 10;
+  export const CELL_SIZE = 10;
 
   export interface IGameFieldCell {
     positionX: number;
     positionY: number;
-    type: GameFieldCellTypesEnum;
+    type: CellTypesEnum;
     animationFramesCount: number;
   }
 

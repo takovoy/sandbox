@@ -1,7 +1,7 @@
-import {GameFieldModelNamespace} from '../models/GameFieldModel.namespace';
+import {GameFieldNS} from '../models/GameField.namespace';
 import {GrassCell} from 'src/impl/game-field-cells.impl';
 
-export const GAME_FIELD: GameFieldModelNamespace.IGameField = {
+export const GAME_FIELD: GameFieldNS.IGameField = {
   id: 'test game level',
   name: 'That is the test level',
   description: 'That is the test level',
