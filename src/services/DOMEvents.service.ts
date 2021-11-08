@@ -11,44 +11,62 @@ export enum KeyboardKeysEnum {
   shift = 'Shift'
 }
 
+type KeyboardKeysType = {[key in KeyboardKeysEnum]: Observable<KeyboardEvent>};
+
 export enum KeyboardEventsEnum {
-  wUp = 'wUp',
-  wDown = 'wDown',
-  aUp = 'aUp',
-  aDown = 'aDown',
-  sUp = 'sUp',
-  sDown = 'sDown',
-  dUp = 'dUp',
-  dDown = 'dDown',
-  spaceUp = 'spaceUp',
-  spaceDown = 'spaceDown',
-  shiftUp = 'shiftUp',
-  shiftDown = 'shiftDown',
+  up = 'up',
+  down = 'down',
 }
+
+type KeyboardEventsType = {[key in KeyboardEventsEnum]: Observable<KeyboardEvent>};
+
+type KeyboardEventsObserversType = {[key in KeyboardKeysEnum]: KeyboardEventsType};
+
+export const NavigationKeysList = [
+  KeyboardKeysEnum.w,
+  KeyboardKeysEnum.a,
+  KeyboardKeysEnum.s,
+  KeyboardKeysEnum.d,
+];
+
+export type NavigationKeysType = typeof NavigationKeysList[number];
+
+type NavigationKeysObserversType = {[key in NavigationKeysType]: Observable<KeyboardEvent>};
+
+type NavigationEventsObserversType = {[key in NavigationKeysType]: KeyboardEventsType};
 
 @Injectable()
 export class DOMEventsService {
   public keyboardListener: Subject<KeyboardEvent> = new Subject();
-  public keys: {[key in KeyboardKeysEnum]: Observable<KeyboardEvent>} = {
-    [KeyboardKeysEnum.w]: this.keyboardListener.pipe(filter(event => event.key.toLowerCase() === KeyboardKeysEnum.w)),
-    [KeyboardKeysEnum.a]: this.keyboardListener.pipe(filter(event => event.key.toLowerCase() === KeyboardKeysEnum.a)),
-    [KeyboardKeysEnum.s]: this.keyboardListener.pipe(filter(event => event.key.toLowerCase() === KeyboardKeysEnum.s)),
-    [KeyboardKeysEnum.d]: this.keyboardListener.pipe(filter(event => event.key.toLowerCase() === KeyboardKeysEnum.d)),
+
+  public navigationKeys: NavigationKeysObserversType = NavigationKeysList.reduce<NavigationKeysObserversType>((res, item) => {
+    res[item] = this.keyboardListener.pipe(filter(event => event.key.toLowerCase() === item));
+    return res;
+  }, {} as NavigationKeysObserversType);
+
+  public navigationEvents: NavigationEventsObserversType = NavigationKeysList.reduce<NavigationEventsObserversType>((res, item) => {
+    res[item] = {
+      [KeyboardEventsEnum.up]: this.navigationKeys[item].pipe(filter(event => event.type === 'keyup')),
+      [KeyboardEventsEnum.down]: this.navigationKeys[item].pipe(filter(event => event.type === 'keydown')),
+    };
+    return res;
+  }, {} as NavigationEventsObserversType);
+
+  public keys: KeyboardKeysType = {
+    ...this.navigationKeys,
     [KeyboardKeysEnum.space]: this.keyboardListener.pipe(filter(event => event.key === KeyboardKeysEnum.space)),
     [KeyboardKeysEnum.shift]: this.keyboardListener.pipe(filter(event => event.key === KeyboardKeysEnum.shift)),
   };
-  public events: {[key in KeyboardEventsEnum]: Observable<KeyboardEvent>} = {
-    [KeyboardEventsEnum.wUp]: this.keys[KeyboardKeysEnum.w].pipe(filter(event => event.type === 'keyup')),
-    [KeyboardEventsEnum.wDown]: this.keys[KeyboardKeysEnum.w].pipe(filter(event => event.type === 'keydown')),
-    [KeyboardEventsEnum.aUp]: this.keys[KeyboardKeysEnum.a].pipe(filter(event => event.type === 'keyup')),
-    [KeyboardEventsEnum.aDown]: this.keys[KeyboardKeysEnum.a].pipe(filter(event => event.type === 'keydown')),
-    [KeyboardEventsEnum.sUp]: this.keys[KeyboardKeysEnum.s].pipe(filter(event => event.type === 'keyup')),
-    [KeyboardEventsEnum.sDown]: this.keys[KeyboardKeysEnum.s].pipe(filter(event => event.type === 'keydown')),
-    [KeyboardEventsEnum.dUp]: this.keys[KeyboardKeysEnum.d].pipe(filter(event => event.type === 'keyup')),
-    [KeyboardEventsEnum.dDown]: this.keys[KeyboardKeysEnum.d].pipe(filter(event => event.type === 'keydown')),
-    [KeyboardEventsEnum.spaceUp]: this.keys[KeyboardKeysEnum.space].pipe(filter(event => event.type === 'keyup')),
-    [KeyboardEventsEnum.spaceDown]: this.keys[KeyboardKeysEnum.space].pipe(filter(event => event.type === 'keydown')),
-    [KeyboardEventsEnum.shiftUp]: this.keys[KeyboardKeysEnum.shift].pipe(filter(event => event.type === 'keyup')),
-    [KeyboardEventsEnum.shiftDown]: this.keys[KeyboardKeysEnum.shift].pipe(filter(event => event.type === 'keydown')),
+
+  public events: KeyboardEventsObserversType = {
+    ...this.navigationEvents,
+    [KeyboardKeysEnum.space]: {
+      [KeyboardEventsEnum.up]: this.keys[KeyboardKeysEnum.space].pipe(filter(event => event.type === 'keyup')),
+      [KeyboardEventsEnum.down]: this.keys[KeyboardKeysEnum.space].pipe(filter(event => event.type === 'keydown')),
+    },
+    [KeyboardKeysEnum.shift]: {
+      [KeyboardEventsEnum.up]: this.keys[KeyboardKeysEnum.shift].pipe(filter(event => event.type === 'keyup')),
+      [KeyboardEventsEnum.down]: this.keys[KeyboardKeysEnum.shift].pipe(filter(event => event.type === 'keydown')),
+    },
   };
 }

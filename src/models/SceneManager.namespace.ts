@@ -1,6 +1,6 @@
 import {TRIGONOMETRY} from 'excessor-trigonometry';
 
-export namespace SceneManagerNamespace {
+export namespace SceneManagerNS {
   export enum CardinalPointsEnum {
     north = 'north',
     northwest = 'northwest',

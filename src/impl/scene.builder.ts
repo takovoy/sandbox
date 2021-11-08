@@ -22,7 +22,7 @@ export class SceneBuilder {
   private static async loadGameFieldCellTextures(cell: GameFieldNS.IGameFieldCell): Promise<threejs.Texture[]> {
     const promises = [];
     for (let i = 0; i < cell.animationFramesCount; i++) {
-      promises.push(this.loadTexture(`game-field-cells/${cell.type}/${i}.png`));
+      promises.push(this.loadTexture(`game-field-cells/${cell.type}/${i}.jpeg`));
     }
     return Promise.all(promises);
   }

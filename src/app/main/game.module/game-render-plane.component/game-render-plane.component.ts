@@ -3,13 +3,11 @@ import {GameFieldNS} from 'src/models/GameField.namespace';
 import {OrganismModelNamespace as OrganismModel} from 'src/models/OrganismModel.namespace';
 import {GAME_FIELD} from 'src/stubs/game-field.stub';
 import {SceneBuilder, SceneBuilderContext} from 'src/impl/scene.builder';
-import {DOMEventsService, KeyboardKeysEnum} from 'src/services/DOMEvents.service';
 import {SceneManager} from 'src/impl/scene-manager';
 import {Subscription} from 'rxjs';
-import {SceneManagerNamespace} from 'src/models/SceneManager.namespace';
-import CardinalPointsEnum = SceneManagerNamespace.CardinalPointsEnum;
 import {AnimationService} from 'src/services/Animation.service';
 import {ExcessorPirate} from 'excessor-pirate';
+import {FieldNavigationService} from 'src/services/FieldNavigation.service';
 
 @Component({
   selector: 'game-render-plane',
@@ -21,13 +19,13 @@ export class GameRenderPlaneComponent implements OnInit, OnDestroy {
   private gameFieldEntity: GameFieldNS.IGameField = GAME_FIELD;
   public loadingProgress = 3;
   private sceneManager: SceneManager;
-  private domEventsSubscriptions: Subscription[] = [];
-  private passedKeys: {[key in KeyboardKeysEnum]?: ExcessorPirate.IOperation} = {};
+  private navigationSubscription: Subscription;
+  private moveAnimation: ExcessorPirate.IOperation;
 
   constructor(
     private hostElement: ElementRef,
-    private domEvents: DOMEventsService,
     private animationService: AnimationService,
+    private fieldNavigationService: FieldNavigationService,
   ) {}
 
   public ngOnInit(): void {
@@ -45,7 +43,7 @@ export class GameRenderPlaneComponent implements OnInit, OnDestroy {
   }
 
   public ngOnDestroy(): void {
-    this.domEventsSubscriptions.forEach(item => item.unsubscribe());
+    this.navigationSubscription?.unsubscribe();
   }
 
   private async initGameField(
@@ -72,32 +70,25 @@ export class GameRenderPlaneComponent implements OnInit, OnDestroy {
     });
   }
 
-  public startMoving(cardinalPoints): void {}
-
   private subscribeToEvents(): void {
-    this.domEventsSubscriptions.push(this.domEvents.events.wDown.subscribe(() => {
-      this.animationService.animate({
-        time: 300,
+    this.navigationSubscription = this.fieldNavigationService.onMove.subscribe((value) => {
+      if (this.moveAnimation) {
+        this.animationService.removeAnimation(this.moveAnimation);
+        this.moveAnimation = undefined;
+      }
+
+      if (value === 'stop') {
+        return;
+      }
+
+      this.moveAnimation = this.animationService.animate({
+        time: 200,
         frame: () => {
-          this.sceneManager.moveTowards(CardinalPointsEnum.north, 3);
+          this.sceneManager.moveTowards(value, 3);
           this.sceneManager.render();
         },
+        recourse: true,
       });
-    }));
-
-    this.domEventsSubscriptions.push(this.domEvents.events.aUp.subscribe(() => {
-      this.sceneManager.moveTowards(CardinalPointsEnum.west, 10);
-      this.sceneManager.render();
-    }));
-
-    this.domEventsSubscriptions.push(this.domEvents.events.sUp.subscribe(() => {
-      this.sceneManager.moveTowards(CardinalPointsEnum.south, 10);
-      this.sceneManager.render();
-    }));
-
-    this.domEventsSubscriptions.push(this.domEvents.events.dUp.subscribe(() => {
-      this.sceneManager.moveTowards(CardinalPointsEnum.east, 10);
-      this.sceneManager.render();
-    }));
+    });
   }
 }

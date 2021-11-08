@@ -8,6 +8,7 @@ import {LibModule} from '../lib/lib.module';
 import {GameModule} from './main/game.module/game.module';
 import {DOMEventsService} from 'src/services/DOMEvents.service';
 import {AnimationService} from 'src/services/Animation.service';
+import {FieldNavigationService} from 'src/services/FieldNavigation.service';
 
 @NgModule({
   declarations: [
@@ -26,6 +27,7 @@ import {AnimationService} from 'src/services/Animation.service';
       useValue: new ExcessorPirate.Pirate(24),
     },
     AnimationService,
+    FieldNavigationService,
   ],
   bootstrap: [AppComponent]
 })

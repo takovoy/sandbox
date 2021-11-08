@@ -1,6 +1,6 @@
 import * as threejs from 'three';
 import {TRIGONOMETRY} from 'excessor-trigonometry';
-import {SceneManagerNamespace} from 'src/models/SceneManager.namespace';
+import {SceneManagerNS} from 'src/models/SceneManager.namespace';
 
 export class SceneManager {
   public currentPosition: [number, number] = [0, 0];
@@ -14,9 +14,9 @@ export class SceneManager {
   public moveTo(positionX: number, positionY: number): void {
     this.currentPosition = [positionX, positionY];
     this.camera.position.set(
-      SceneManagerNamespace.DefaultCameraPosition[0] + this.currentPosition[0],
-      SceneManagerNamespace.DefaultCameraPosition[1],
-      SceneManagerNamespace.DefaultCameraPosition[2] + this.currentPosition[1],
+      SceneManagerNS.DefaultCameraPosition[0] + this.currentPosition[0],
+      SceneManagerNS.DefaultCameraPosition[1],
+      SceneManagerNS.DefaultCameraPosition[2] + this.currentPosition[1],
     );
     this.camera.lookAt(this.currentPosition[0], 0, this.currentPosition[1]);
   }
@@ -26,8 +26,8 @@ export class SceneManager {
     this.moveTo(position[0], position[1]);
   }
 
-  public moveTowards(direction: SceneManagerNamespace.CardinalPointsEnum, length: number): void {
-    this.moveByVector(SceneManagerNamespace.CardinalPointsVectors[direction], length);
+  public moveTowards(direction: SceneManagerNS.CardinalPointsEnum, length: number): void {
+    this.moveByVector(SceneManagerNS.CardinalPointsVectors[direction], length);
   }
 
   public render(): void {
