@@ -22,7 +22,7 @@
     "excessor-pirate": "^1.0.8",
     "excessor-trigonometry": "^1.0.1",
     "rxjs": "~6.5.5",
-    "three": "^0.132.2",
+    "three": "^0.137.0",
     "tslib": "^2.0.0",
     "zone.js": "~0.10.3"
   },
